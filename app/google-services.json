@@ -1,0 +1,17 @@
+{
+  "project_info": {
+    "project_number": "REEMPLAZAR",
+    "project_id": "idiomas-internacionales"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "REEMPLAZAR",
+        "android_client_info": {
+          "package_name": "com.idiomasinternacionales"
+        }
+      }
+    }
+  ]
+}
+# Este archivo es un placeholder. Reemplaza por el google-services.json real de Firebase.
