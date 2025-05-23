@@ -17,6 +17,8 @@ Guía definitiva para el desarrollo de la aplicación "Idiomas Internacionales",
 - [Mantenimiento y Actualizaciones](#mantenimiento-y-actualizaciones)
 - [Licencia](#licencia)
 - [Colaboración](#colaboración)
+- [Documentación Técnica](#documentación-técnica)
+- [Dependencias y Herramientas](#dependencias-y-herramientas)
 
 ---
 
@@ -140,3 +142,231 @@ Consulta el archivo LICENSE para los detalles.
 - Abre un Issue para errores o sugerencias.
 - Haz un Pull Request siguiendo las convenciones y la guía de contribución.
 - Consulta el archivo [CONTRIBUTING.md](CONTRIBUTING.md) para más detalles.
+
+---
+
+## Documentación Técnica
+
+### Estructura de Carpetas y Archivos
+
+- `/src/modules/`: Módulos principales de aprendizaje (vocabulario, gramática, comprensión auditiva y oral).
+- `/src/ai/`: Lógica de personalización de rutas de aprendizaje con IA.
+- `/src/lecciones/`: Tipos de lecciones interactivas (flashcards, opción múltiple, rellenar huecos, ejercicios de escucha).
+
+### Estructura de Datos (Modelo Base)
+
+#### Usuario
+```kotlin
+// Representación conceptual en Kotlin
+ data class Usuario(
+    val id: String,
+    val nombre: String,
+    val email: String,
+    val idiomaMeta: String,
+    val nivel: Nivel,
+    val progreso: Progreso,
+    val preferencias: Preferencias,
+    val estadisticas: Estadisticas,
+    val notificaciones: List<Notificacion>
+)
+```
+
+#### Nivel
+```kotlin
+enum class Nivel { A1, A2, B1, B2, C1, C2 }
+```
+
+#### Estadísticas
+```kotlin
+ data class Estadisticas(
+    val diasRacha: Int,
+    val puntos: Int,
+    val insignias: List<Insignia>,
+    val tiempoTotalEstudio: Long // en minutos
+)
+
+ data class Insignia(
+    val id: String,
+    val nombre: String,
+    val descripcion: String,
+    val fechaObtenida: Long
+)
+```
+
+#### Notificación
+```kotlin
+ data class Notificacion(
+    val id: String,
+    val mensaje: String,
+    val leida: Boolean,
+    val fecha: Long
+)
+```
+
+#### Configuración de Accesibilidad
+```kotlin
+ data class ConfiguracionAccesibilidad(
+    val modoOscuro: Boolean,
+    val fuenteDislexia: Boolean,
+    val tamanoTexto: Float
+)
+```
+
+#### Ruta de Aprendizaje
+```kotlin
+ data class RutaAprendizaje(
+    val id: String,
+    val nombre: String,
+    val modulos: List<Modulo>,
+    val adaptadaPorIA: Boolean,
+    val fechaCreacion: Long,
+    val fechaUltimaActualizacion: Long,
+    val feedbackUsuario: String?
+)
+```
+
+#### Módulo
+```kotlin
+ data class Modulo(
+    val id: String,
+    val tipo: TipoModulo, // Vocabulario, Gramática, Comprensión Auditiva, Oral
+    val lecciones: List<Leccion>,
+    val progreso: ProgresoModulo,
+    val descripcion: String
+)
+
+ data class ProgresoModulo(
+    val porcentaje: Int,
+    val leccionesCompletadas: Int,
+    val totalLecciones: Int
+)
+```
+
+#### Lección
+```kotlin
+ data class Leccion(
+    val id: String,
+    val tipo: TipoLeccion, // Flashcard, Opción Múltiple, Rellenar Huecos, Escucha
+    val contenido: ContenidoLeccion,
+    val retroalimentacion: String?,
+    val completada: Boolean,
+    val fechaCompletada: Long?
+)
+
+sealed class ContenidoLeccion {
+    data class Flashcard(val pregunta: String, val respuesta: String): ContenidoLeccion()
+    data class OpcionMultiple(val pregunta: String, val opciones: List<String>, val respuestaCorrecta: Int): ContenidoLeccion()
+    data class RellenarHuecos(val frase: String, val huecos: List<String>, val respuestas: List<String>): ContenidoLeccion()
+    data class Escucha(val urlAudio: String, val pregunta: String, val respuesta: String): ContenidoLeccion()
+}
+```
+
+#### Preferencias
+```kotlin
+ data class Preferencias(
+    val ritmo: String, // rápido, normal, lento
+    val temasFavoritos: List<String>,
+    val notificacionesActivas: Boolean
+)
+```
+
+---
+
+### Ampliación de la Documentación Técnica
+
+#### Arquitectura General
+- **MVVM:** Separación clara entre lógica de negocio (ViewModel), datos (Model/Repository) y UI (View/Compose).
+- **Persistencia:** Room para datos complejos (progreso, rutas, módulos) y DataStore para configuraciones simples.
+- **IA:** Integración con APIs externas para personalización, generación de contenido y feedback fonético.
+- **Seguridad:** Uso de Android Keystore, HTTPS con certificate pinning, detección de root/jailbreak y ofuscación con R8/ProGuard.
+- **Accesibilidad:** Soporte para modo oscuro puro, fuentes para dislexia y ajuste de tamaño de texto.
+
+#### Flujo de Personalización con IA
+1. El usuario inicia sesión y selecciona idioma meta y nivel.
+2. El sistema genera una ruta de aprendizaje inicial basada en nivel, preferencias y objetivos.
+3. La IA adapta el contenido y ritmo según el progreso, feedback y desempeño del usuario.
+4. Se actualizan módulos y lecciones dinámicamente, priorizando debilidades detectadas.
+5. El usuario recibe retroalimentación personalizada y recomendaciones de estudio.
+
+#### Ejemplo de Integración de Módulos
+- Cada módulo (vocabulario, gramática, etc.) implementa una interfaz común para facilitar la integración y el seguimiento del progreso.
+- Las lecciones pueden ser reutilizadas en diferentes rutas o módulos según la personalización.
+
+#### Seguridad y Privacidad
+- Todos los datos sensibles se almacenan cifrados.
+- Consentimiento explícito para uso de voz y datos biométricos.
+- Cumplimiento estricto con GDPR y normativas locales.
+
+#### Pruebas y Calidad
+- Cobertura mínima del 80% en pruebas unitarias y de integración.
+- Pruebas de UI automatizadas para flujos críticos.
+- Reportes de cobertura y resultados incluidos en cada release.
+
+---
+
+## Dependencias y Herramientas
+
+La aplicación requiere las siguientes dependencias principales para su funcionamiento, desarrollo y pruebas. Todas deben ser gestionadas en el archivo `build.gradle.kts` (Kotlin DSL) del proyecto Android:
+
+#### Dependencias de Android y Kotlin
+- **Kotlin Standard Library**
+- **AndroidX Core, AppCompat, Activity, Fragment**
+- **Jetpack Compose** (UI moderna)
+- **Material Design 3**
+- **Android Architecture Components**: ViewModel, LiveData, Room, Navigation, WorkManager
+- **Kotlin Coroutines** (asincronía)
+- **Room** (persistencia local)
+- **DataStore** (configuración y preferencias)
+- **Retrofit + OkHttp** (networking seguro)
+- **Moshi** (JSON, por defecto) o **Gson** (solo si es requerido)
+- **Google Cloud Speech-to-Text** o **Azure Cognitive Services Speech** (reconocimiento de voz)
+- **Google Cloud Natural Language API** y **OpenAI API** (NLP y generación de contenido)
+- **Crashlytics** y **Google Analytics for Firebase** (monitoreo y análisis)
+- **ProGuard o R8** (ofuscación y optimización)
+- **JUnit, Mockito** (pruebas unitarias)
+- **Robolectric** (pruebas de integración)
+- **Espresso, Jetpack Compose Testing** (pruebas de UI)
+
+#### Seguridad
+- **Android Keystore** (almacenamiento seguro de claves)
+- **Certificate Pinning** (en OkHttp)
+- **Detección de root/jailbreak** (librerías recomendadas: SafetyNet, RootBeer)
+
+#### Documentación de Instalación
+- Todas las dependencias deben declararse en el archivo `build.gradle.kts` del módulo principal.
+- Las claves y credenciales de APIs externas deben gestionarse de forma segura (no incluir en el repositorio).
+- Se recomienda usar versiones estables y mantener actualizaciones automáticas con Dependabot (ver `.github/dependabot.yml`).
+
+#### Ejemplo de sección de dependencias en `build.gradle.kts`:
+```kotlin
+dependencies {
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.activity:activity-compose:1.8.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.moshi:moshi:1.15.0")
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("com.google.firebase:firebase-crashlytics:18.6.2")
+    implementation("com.google.firebase:firebase-analytics:21.5.0")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:5.2.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.6.0")
+    // ...otras dependencias según necesidades
+}
+```
+
+#### Notas
+- Para módulos de IA, se debe seguir la documentación oficial de Google Cloud y OpenAI para la integración y autenticación.
+- Las dependencias de seguridad y detección de root deben ser revisadas y actualizadas periódicamente.
+- Documentar cualquier dependencia adicional en el README y en el CHANGELOG ante cada actualización.
+
+---
+
+Esta documentación y estructura de datos sirven como guía para el desarrollo, asegurando escalabilidad, seguridad y personalización avanzada en la app.
