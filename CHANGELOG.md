@@ -11,3 +11,7 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 - Modelos de datos en Kotlin para usuario, rutas de aprendizaje, módulos y lecciones.
 - Descripción de arquitectura, flujos de IA, integración de módulos, seguridad y pruebas.
 - Sección detallada de dependencias, herramientas y gestión en build.gradle.kts, con ejemplos y recomendaciones.
+- Implementación inicial de modelos de dominio, entidad Room, DAO, repositorio, casos de uso y ViewModel para Usuario.
+- Módulo de inyección de dependencias con Hilt.
+- Pantalla principal de bienvenida y navegación básica con Jetpack Compose.
+- Conexión de HomeScreen a la navegación principal.
