@@ -18,5 +18,10 @@ fun Navigation() {
             usuarioViewModel.cargarUsuarioDemo()
             HomeScreen()
         }
+        composable("modulos") {
+            val moduloViewModel: com.idiomasinternacionales.presentation.viewmodel.ModuloViewModel = hiltViewModel()
+            moduloViewModel.cargarModulos()
+            com.idiomasinternacionales.presentation.screens.ModulosScreen(moduloViewModel)
+        }
     }
 }

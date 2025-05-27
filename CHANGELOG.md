@@ -18,3 +18,7 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 - DummyData para pruebas rápidas de UI y lógica.
 - HomeScreen ahora muestra el nombre del usuario demo usando StateFlow y ViewModel.
 - Inyección de ViewModel en la navegación y carga automática de usuario demo.
+- Modelos de dominio para módulos de aprendizaje y lecciones interactivas.
+- Repositorio, casos de uso y ViewModel para módulos de aprendizaje.
+- Pantalla Compose para mostrar la lista de módulos de aprendizaje.
+- Ruta de navegación para la pantalla de módulos de aprendizaje.
