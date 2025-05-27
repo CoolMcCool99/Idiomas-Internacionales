@@ -38,3 +38,4 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 - DataStoreManager para persistencia simple y modo offline de configuraciones clave del usuario.
 - Modelos, repositorio, casos de uso y ViewModel para gamificación avanzada y ranking.
 - Pantalla Compose para mostrar gamificación avanzada y ranking de usuarios.
+- Integración de feedback de IA: casos de uso, ViewModel y pantalla Compose para feedback de pronunciación y rutas personalizadas.
