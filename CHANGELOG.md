@@ -26,3 +26,9 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 - Casos de uso y ViewModel para lecciones interactivas.
 - Pantalla Compose para mostrar las lecciones interactivas de un módulo.
 - Rutas de navegación para acceder a las lecciones desde los módulos.
+- Modelos de dominio y repositorio para perfil de usuario y gamificación.
+- Casos de uso y ViewModel para perfil de usuario.
+- Pantalla Compose para mostrar el perfil de usuario y gamificación.
+- Interfaz y clase base para integración de IA (rutas personalizadas y feedback de pronunciación).
+- Módulo de Hilt para proveer repositorios de módulos, lecciones, perfil y servicio de IA.
+- Utilidades de seguridad para detección de root y emulador.
