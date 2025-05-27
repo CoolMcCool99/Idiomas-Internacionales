@@ -8,6 +8,8 @@ import androidx.navigation.compose.rememberNavController
 import com.idiomasinternacionales.presentation.screens.HomeScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.idiomasinternacionales.presentation.viewmodel.UsuarioViewModel
+import com.idiomasinternacionales.presentation.screens.ModulosScreen
+import com.idiomasinternacionales.presentation.screens.LeccionesScreen
 
 @Composable
 fun Navigation() {
@@ -19,9 +21,11 @@ fun Navigation() {
             HomeScreen()
         }
         composable("modulos") {
-            val moduloViewModel: com.idiomasinternacionales.presentation.viewmodel.ModuloViewModel = hiltViewModel()
-            moduloViewModel.cargarModulos()
-            com.idiomasinternacionales.presentation.screens.ModulosScreen(moduloViewModel)
+            ModulosScreen()
+        }
+        composable("lecciones/{moduloId}") { backStackEntry ->
+            val moduloId = backStackEntry.arguments?.getString("moduloId") ?: "1"
+            LeccionesScreen(moduloId)
         }
     }
 }

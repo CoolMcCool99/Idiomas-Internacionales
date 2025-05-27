@@ -22,3 +22,7 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 - Repositorio, casos de uso y ViewModel para módulos de aprendizaje.
 - Pantalla Compose para mostrar la lista de módulos de aprendizaje.
 - Ruta de navegación para la pantalla de módulos de aprendizaje.
+- Modelos y repositorio para lecciones interactivas (flashcard, opción múltiple, rellenar huecos, escucha).
+- Casos de uso y ViewModel para lecciones interactivas.
+- Pantalla Compose para mostrar las lecciones interactivas de un módulo.
+- Rutas de navegación para acceder a las lecciones desde los módulos.
