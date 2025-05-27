@@ -32,3 +32,7 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 - Interfaz y clase base para integración de IA (rutas personalizadas y feedback de pronunciación).
 - Módulo de Hilt para proveer repositorios de módulos, lecciones, perfil y servicio de IA.
 - Utilidades de seguridad para detección de root y emulador.
+- TypeConverters para persistencia avanzada de objetos complejos en Room.
+- Modelos, repositorio, casos de uso y ViewModel para notificaciones inteligentes.
+- Pantalla Compose para mostrar y gestionar notificaciones inteligentes.
+- DataStoreManager para persistencia simple y modo offline de configuraciones clave del usuario.
