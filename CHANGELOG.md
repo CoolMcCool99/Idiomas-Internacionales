@@ -36,3 +36,5 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 - Modelos, repositorio, casos de uso y ViewModel para notificaciones inteligentes.
 - Pantalla Compose para mostrar y gestionar notificaciones inteligentes.
 - DataStoreManager para persistencia simple y modo offline de configuraciones clave del usuario.
+- Modelos, repositorio, casos de uso y ViewModel para gamificación avanzada y ranking.
+- Pantalla Compose para mostrar gamificación avanzada y ranking de usuarios.

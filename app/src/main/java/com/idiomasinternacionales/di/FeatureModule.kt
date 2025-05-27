@@ -2,10 +2,14 @@ package com.idiomasinternacionales.di
 
 import com.idiomasinternacionales.data.ia.IAService
 import com.idiomasinternacionales.data.ia.IAServiceImpl
+import com.idiomasinternacionales.data.repository.GamificacionRepository
+import com.idiomasinternacionales.data.repository.GamificacionRepositoryImpl
 import com.idiomasinternacionales.data.repository.LeccionRepository
 import com.idiomasinternacionales.data.repository.LeccionRepositoryImpl
 import com.idiomasinternacionales.data.repository.ModuloRepository
 import com.idiomasinternacionales.data.repository.ModuloRepositoryImpl
+import com.idiomasinternacionales.data.repository.NotificacionRepository
+import com.idiomasinternacionales.data.repository.NotificacionRepositoryImpl
 import com.idiomasinternacionales.data.repository.PerfilRepository
 import com.idiomasinternacionales.data.repository.PerfilRepositoryImpl
 import dagger.Module
@@ -32,4 +36,12 @@ object FeatureModule {
     @Provides
     @Singleton
     fun provideIAService(): IAService = IAServiceImpl()
+
+    @Provides
+    @Singleton
+    fun provideNotificacionRepository(): NotificacionRepository = NotificacionRepositoryImpl()
+
+    @Provides
+    @Singleton
+    fun provideGamificacionRepository(): GamificacionRepository = GamificacionRepositoryImpl()
 }
