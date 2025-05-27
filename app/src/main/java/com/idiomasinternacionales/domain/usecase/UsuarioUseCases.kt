@@ -1,6 +1,6 @@
 package com.idiomasinternacionales.domain.usecase
 
-import com.idiomasinternacionales.data.repository.UsuarioRepository
+import com.idiomasinternacionales.domain.repository.UsuarioRepository
 import com.idiomasinternacionales.domain.model.Usuario
 
 class GetUsuarioUseCase(private val repository: UsuarioRepository) {

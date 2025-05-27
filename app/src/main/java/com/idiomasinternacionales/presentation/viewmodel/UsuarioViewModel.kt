@@ -2,6 +2,7 @@ package com.idiomasinternacionales.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.idiomasinternacionales.domain.model.DummyData
 import com.idiomasinternacionales.domain.model.Usuario
 import com.idiomasinternacionales.domain.usecase.GetUsuarioUseCase
 import com.idiomasinternacionales.domain.usecase.SaveUsuarioUseCase
@@ -29,6 +30,12 @@ class UsuarioViewModel @Inject constructor(
         viewModelScope.launch {
             saveUsuario(usuario)
             _usuario.value = usuario
+        }
+    }
+
+    fun cargarUsuarioDemo() {
+        viewModelScope.launch {
+            _usuario.value = DummyData.usuarioDemo
         }
     }
 }

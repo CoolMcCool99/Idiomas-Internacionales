@@ -15,3 +15,6 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 - Módulo de inyección de dependencias con Hilt.
 - Pantalla principal de bienvenida y navegación básica con Jetpack Compose.
 - Conexión de HomeScreen a la navegación principal.
+- DummyData para pruebas rápidas de UI y lógica.
+- HomeScreen ahora muestra el nombre del usuario demo usando StateFlow y ViewModel.
+- Inyección de ViewModel en la navegación y carga automática de usuario demo.
