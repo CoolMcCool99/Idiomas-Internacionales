@@ -72,7 +72,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.squareup.moshi:moshi:1.15.0")
+    implementation("com.squareup.moshi:moshi:1.15.2")
     implementation("com.google.android.material:material:1.11.0")
     implementation("com.google.firebase:firebase-crashlytics:18.6.2")
     implementation("com.google.firebase:firebase-analytics:21.5.0")
