@@ -75,7 +75,7 @@ dependencies {
     implementation("com.squareup.moshi:moshi:1.15.0")
     implementation("com.google.android.material:material:1.11.0")
     implementation("com.google.firebase:firebase-crashlytics:18.6.2")
-    implementation("com.google.firebase:firebase-analytics:21.5.0")
+    implementation("com.google.firebase:firebase-analytics:23.0.0")
     implementation("com.google.cloud:google-cloud-speech:4.30.0")
     implementation("com.google.cloud:google-cloud-language:2.31.0")
     testImplementation("junit:junit:4.13.2")
