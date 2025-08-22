@@ -2,7 +2,11 @@ package com.idiomasinternacionales.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.idiomasinternacionales.domain.model.*
+import com.idiomasinternacionales.domain.model.Estadisticas
+import com.idiomasinternacionales.domain.model.Nivel
+import com.idiomasinternacionales.domain.model.Notificacion
+import com.idiomasinternacionales.domain.model.Preferencias
+import com.idiomasinternacionales.domain.model.Progreso
 
 @Entity(tableName = "usuarios")
 data class UsuarioEntity(
@@ -10,9 +14,9 @@ data class UsuarioEntity(
     val nombre: String,
     val email: String,
     val idiomaMeta: String,
-    val nivel: String,
-    val progreso: String, // Serializado (puede usarse TypeConverters)
-    val preferencias: String, // Serializado
-    val estadisticas: String, // Serializado
-    val notificaciones: String // Serializado
+    val nivel: Nivel,
+    val progreso: Progreso,
+    val preferencias: Preferencias,
+    val estadisticas: Estadisticas,
+    val notificaciones: List<Notificacion>
 )

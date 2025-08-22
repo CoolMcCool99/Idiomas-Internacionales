@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Idiomas Internacionales</string>
+
+    <!-- Textos Generales -->
+    <string name="welcome_message">Bienvenido a Idiomas Internacionales</string>
+    <string name="user_profile_title">Perfil de Usuario</string>
+
+    <!-- Estadísticas de Perfil -->
+    <string name="profile_points">Puntos: %1$d</string>
+    <string name="profile_streak">Racha: %1$d</string>
+    <string name="profile_no_data">Sin datos</string>
+
+</resources>

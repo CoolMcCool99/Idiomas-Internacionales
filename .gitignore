@@ -1,0 +1,29 @@
+# Archivos de dependencias de Gradle
+.gradle
+
+# Carpeta de build (archivos generados)
+/build
+
+# Archivos de configuración local (contiene rutas del SDK, claves, etc.)
+local.properties
+
+# Archivos y carpetas de IntelliJ / Android Studio
+.idea
+*.iml
+*.ipr
+*.iws
+
+# Archivos del emulador y sistema
+.DS_Store
+captures/
+.externalNativeBuild
+
+# Archivos de registro
+*.log
+
+# Paquetes de aplicación (APKs)
+*.apk
+*.aab
+
+# Archivos de ProGuard
+proguard/

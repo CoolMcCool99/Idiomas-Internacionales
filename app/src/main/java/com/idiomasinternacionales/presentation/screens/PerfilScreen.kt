@@ -10,6 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.idiomasinternacionales.R
 import com.idiomasinternacionales.presentation.viewmodel.PerfilViewModel
 
 @Composable
@@ -20,9 +22,9 @@ fun PerfilScreen(perfilViewModel: PerfilViewModel = hiltViewModel()) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Perfil de Usuario")
-        Text(text = perfil?.usuario?.nombre ?: "Sin datos")
-        Text(text = "Puntos: ${perfil?.gamificacion?.puntos ?: 0}")
-        Text(text = "Racha: ${perfil?.gamificacion?.racha ?: 0}")
+        Text(text = stringResource(id = R.string.user_profile_title))
+        Text(text = perfil?.usuario?.nombre ?: stringResource(id = R.string.profile_no_data))
+        Text(text = stringResource(id = R.string.profile_points, perfil?.gamificacion?.puntos ?: 0))
+        Text(text = stringResource(id = R.string.profile_streak, perfil?.gamificacion?.racha ?: 0))
     }
 }
