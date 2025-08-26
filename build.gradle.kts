@@ -77,7 +77,7 @@ dependencies {
     implementation("com.google.firebase:firebase-crashlytics:18.6.2")
     implementation("com.google.firebase:firebase-analytics:21.5.0")
     implementation("com.google.cloud:google-cloud-speech:4.30.0")
-    implementation("com.google.cloud:google-cloud-language:2.31.0")
+    implementation("com.google.cloud:google-cloud-language:2.73.0")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:5.2.0")
     testImplementation("org.robolectric:robolectric:4.11.1")
