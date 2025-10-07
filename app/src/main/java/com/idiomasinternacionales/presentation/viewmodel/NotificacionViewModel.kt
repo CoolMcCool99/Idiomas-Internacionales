@@ -2,13 +2,14 @@ package com.idiomasinternacionales.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.idiomasinternacionales.domain.model.NotificacionInteligente
+import com.idiomasinternacionales.model.Notificacion
 import com.idiomasinternacionales.domain.usecase.CrearNotificacionUseCase
 import com.idiomasinternacionales.domain.usecase.GetNotificacionesUseCase
 import com.idiomasinternacionales.domain.usecase.MarcarNotificacionLeidaUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,12 +19,14 @@ class NotificacionViewModel @Inject constructor(
     private val marcarLeida: MarcarNotificacionLeidaUseCase,
     private val crearNotificacion: CrearNotificacionUseCase
 ) : ViewModel() {
-    private val _notificaciones = MutableStateFlow<List<NotificacionInteligente>>(emptyList())
-    val notificaciones: StateFlow<List<NotificacionInteligente>> = _notificaciones
+    private val _notificaciones = MutableStateFlow<List<Notificacion>>(emptyList())
+    val notificaciones: StateFlow<List<Notificacion>> = _notificaciones
 
     fun cargarNotificaciones() {
         viewModelScope.launch {
-            _notificaciones.value = getNotificaciones()
+            getNotificaciones().collect { 
+                _notificaciones.value = it
+            }
         }
     }
 
@@ -34,7 +37,7 @@ class NotificacionViewModel @Inject constructor(
         }
     }
 
-    fun crear(notificacion: NotificacionInteligente) {
+    fun crear(notificacion: Notificacion) {
         viewModelScope.launch {
             crearNotificacion(notificacion)
             cargarNotificaciones()

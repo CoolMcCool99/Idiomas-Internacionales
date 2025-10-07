@@ -1,48 +1,69 @@
 package com.idiomasinternacionales.data.local
 
 import androidx.room.TypeConverter
-import com.idiomasinternacionales.domain.model.Estadisticas
-import com.idiomasinternacionales.domain.model.Notificacion
-import com.idiomasinternacionales.domain.model.Preferencias
-import com.idiomasinternacionales.domain.model.Progreso
+import com.idiomasinternacionales.model.Estadisticas
+import com.idiomasinternacionales.model.Notificacion
+import com.idiomasinternacionales.model.Preferencias
+import com.idiomasinternacionales.model.Progreso
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 /**
- * Conversores de tipos para Room. Permiten que la base de datos almacene tipos de datos complejos
- * convirtiéndolos a tipos primitivos (en este caso, String JSON) y viceversa.
- * Room utiliza estos conversores automáticamente al leer o escribir en la base de datos.
+ * Conversores de tipos para Room.
+ * Le dice a Room cómo convertir objetos complejos a y desde un formato que pueda almacenar en la base de datos.
+ * En este caso, usamos Moshi para serializar/deserializar los objetos a/desde JSON (String).
  */
 class Converters {
-    private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+    private val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
 
-    private val notificacionesListAdapter = moshi.adapter<List<Notificacion>>(Types.newParameterizedType(List::class.java, Notificacion::class.java))
-    private val progresoAdapter = moshi.adapter(Progreso::class.java)
-    private val preferenciasAdapter = moshi.adapter(Preferencias::class.java)
-    private val estadisticasAdapter = moshi.adapter(Estadisticas::class.java)
+    // Converters para Progreso
+    @TypeConverter
+    fun fromProgreso(progreso: Progreso?): String? {
+        return moshi.adapter(Progreso::class.java).toJson(progreso)
+    }
 
     @TypeConverter
-    fun fromProgreso(progreso: Progreso?): String? = progresoAdapter.toJson(progreso)
+    fun toProgreso(json: String?): Progreso? {
+        return json?.let { moshi.adapter(Progreso::class.java).fromJson(it) }
+    }
+
+    // Converters para Preferencias
+    @TypeConverter
+    fun fromPreferencias(preferencias: Preferencias?): String? {
+        return moshi.adapter(Preferencias::class.java).toJson(preferencias)
+    }
 
     @TypeConverter
-    fun toProgreso(json: String?): Progreso? = json?.let { progresoAdapter.fromJson(it) }
+    fun toPreferencias(json: String?): Preferencias? {
+        return json?.let { moshi.adapter(Preferencias::class.java).fromJson(it) }
+    }
+
+    // Converters para Estadisticas
+    @TypeConverter
+    fun fromEstadisticas(estadisticas: Estadisticas?): String? {
+        return moshi.adapter(Estadisticas::class.java).toJson(estadisticas)
+    }
 
     @TypeConverter
-    fun fromPreferencias(preferencias: Preferencias?): String? = preferenciasAdapter.toJson(preferencias)
+    fun toEstadisticas(json: String?): Estadisticas? {
+        return json?.let { moshi.adapter(Estadisticas::class.java).fromJson(it) }
+    }
+
+    // Converters para List<Notificacion>
+    @TypeConverter
+    fun fromNotificacionList(notificaciones: List<Notificacion>?): String? {
+        val type = Types.newParameterizedType(List::class.java, Notificacion::class.java)
+        val adapter = moshi.adapter<List<Notificacion>>(type)
+        return adapter.toJson(notificaciones)
+    }
 
     @TypeConverter
-    fun toPreferencias(json: String?): Preferencias? = json?.let { preferenciasAdapter.fromJson(it) }
-
-    @TypeConverter
-    fun fromEstadisticas(estadisticas: Estadisticas?): String? = estadisticasAdapter.toJson(estadisticas)
-
-    @TypeConverter
-    fun toEstadisticas(json: String?): Estadisticas? = json?.let { estadisticasAdapter.fromJson(it) }
-
-    @TypeConverter
-    fun fromNotificacionesList(list: List<Notificacion>?): String? = notificacionesListAdapter.toJson(list)
-
-    @TypeConverter
-    fun toNotificacionesList(json: String?): List<Notificacion>? = json?.let { notificacionesListAdapter.fromJson(it) }
+    fun toNotificacionList(json: String?): List<Notificacion>? {
+        val type = Types.newParameterizedType(List::class.java, Notificacion::class.java)
+        val adapter = moshi.adapter<List<Notificacion>>(type)
+        return json?.let { adapter.fromJson(it) }
+    }
 }
