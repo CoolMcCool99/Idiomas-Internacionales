@@ -4,6 +4,29 @@ Guía definitiva para el desarrollo de la aplicación "Idiomas Internacionales",
 
 ---
 
+## Novedades y Mejoras Recientes
+
+- **Modelos de datos unificados** en `model/ModelosBase.kt` siguiendo la estructura domain/model.
+- **Documentación KDoc** exhaustiva en todos los modelos, repositorios y utilidades clave.
+- **Utilidades de seguridad avanzada** documentadas y listas para uso real (Keystore, root detection, certificate pinning).
+- **Pruebas unitarias y de integración** documentadas y ejecutables.
+- **README y CHANGELOG** actualizados con estructura, arquitectura y ejemplos de uso.
+
+---
+
+## Ejemplo de uso de seguridad avanzada
+
+```kotlin
+// Generar clave segura
+SecurityUtils.generateKey()
+// Cifrar datos
+val (encrypted, iv) = SecurityUtils.encrypt("dato_secreto".toByteArray())
+// Descifrar datos
+val decrypted = SecurityUtils.decrypt(encrypted, iv)
+```
+
+---
+
 ## Tabla de Contenidos
 
 - [Visión General](#visión-general)

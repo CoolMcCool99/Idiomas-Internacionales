@@ -2,34 +2,35 @@ package com.idiomasinternacionales.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.idiomasinternacionales.domain.model.ModuloAprendizaje
-import com.idiomasinternacionales.domain.model.TipoModulo
-import com.idiomasinternacionales.domain.usecase.GetModulosUseCase
-import com.idiomasinternacionales.domain.usecase.GetModuloPorTipoUseCase
+import com.idiomasinternacionales.model.Modulo
+import com.idiomasinternacionales.model.TipoModulo
+import com.idiomasinternacionales.domain.usecase.GetRutasAprendizajeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ModuloViewModel @Inject constructor(
-    private val getModulos: GetModulosUseCase,
-    private val getModuloPorTipo: GetModuloPorTipoUseCase
+    private val getRutasAprendizaje: GetRutasAprendizajeUseCase
 ) : ViewModel() {
-    private val _modulos = MutableStateFlow<List<ModuloAprendizaje>>(emptyList())
-    val modulos: StateFlow<List<ModuloAprendizaje>> = _modulos
+    private val _modulos = MutableStateFlow<List<Modulo>>(emptyList())
+    val modulos: StateFlow<List<Modulo>> = _modulos
 
     fun cargarModulos() {
         viewModelScope.launch {
-            _modulos.value = getModulos()
+            getRutasAprendizaje().collect { rutas ->
+                _modulos.value = rutas.flatMap { it.modulos }
+            }
         }
     }
 
     fun cargarModuloPorTipo(tipo: TipoModulo) {
         viewModelScope.launch {
-            getModuloPorTipo(tipo)?.let {
-                _modulos.value = listOf(it)
+            getRutasAprendizaje().collect { rutas ->
+                _modulos.value = rutas.flatMap { it.modulos }.filter { it.tipo == tipo }
             }
         }
     }

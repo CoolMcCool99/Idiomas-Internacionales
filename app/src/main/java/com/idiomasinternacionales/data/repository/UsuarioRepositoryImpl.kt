@@ -1,58 +1,58 @@
 package com.idiomasinternacionales.data.repository
 
-import com.idiomasinternacionales.data.local.UsuarioDao
-import com.idiomasinternacionales.data.local.UsuarioEntity
-import com.idiomasinternacionales.data.remote.ApiService
-import com.idiomasinternacionales.domain.model.Usuario
+import com.idiomasinternacionales.data.local.dao.UsuarioDao
+import com.idiomasinternacionales.data.local.entities.UsuarioEntity
+import com.idiomasinternacionales.model.Usuario
 import com.idiomasinternacionales.domain.repository.UsuarioRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-/**
- * Implementación de [UsuarioRepository] usando Room y servicios remotos.
- * @param usuarioDao DAO de Room para usuarios.
- * @param apiService Servicio remoto para sincronización.
- */
-class UsuarioRepositoryImpl(
-    private val usuarioDao: UsuarioDao,
-    private val apiService: ApiService
+class UsuarioRepositoryImpl @Inject constructor(
+    private val usuarioDao: UsuarioDao
 ) : UsuarioRepository {
 
-    override suspend fun getUsuario(id: String): Usuario? {
-        // Room se encarga de la conversión gracias a los TypeConverters
-        val entity = usuarioDao.getUsuarioById(id) ?: return null
-        return entityToUsuario(entity)
+    override suspend fun insertUsuario(usuario: Usuario) {
+        usuarioDao.insertUsuario(usuario.toEntity())
     }
 
-    override suspend fun saveUsuario(usuario: Usuario) {
-        // Room se encarga de la conversión gracias a los TypeConverters
-        usuarioDao.insertUsuario(usuarioToEntity(usuario))
+    override suspend fun updateUsuario(usuario: Usuario) {
+        usuarioDao.updateUsuario(usuario.toEntity())
     }
 
-    override suspend fun clearUsuarios() {
+    override fun getUsuarioById(id: String): Flow<Usuario?> {
+        return usuarioDao.getUsuarioById(id).map { it?.toDomain() }
+    }
+
+    override suspend fun deleteAllUsuarios() {
         usuarioDao.deleteAllUsuarios()
     }
+}
 
-    // Mappers simples entre el modelo de Dominio y la Entidad de la BBDD
-    private fun entityToUsuario(entity: UsuarioEntity): Usuario = Usuario(
-        id = entity.id,
-        nombre = entity.nombre,
-        email = entity.email,
-        idiomaMeta = entity.idiomaMeta,
-        nivel = entity.nivel,
-        progreso = entity.progreso,
-        preferencias = entity.preferencias,
-        estadisticas = entity.estadisticas,
-        notificaciones = entity.notificaciones
+fun Usuario.toEntity(): UsuarioEntity {
+    return UsuarioEntity(
+        id = this.id,
+        nombre = this.nombre,
+        email = this.email,
+        idiomaMeta = this.idiomaMeta,
+        nivel = this.nivel,
+        progreso = this.progreso,
+        preferencias = this.preferencias,
+        estadisticas = this.estadisticas,
+        notificaciones = this.notificaciones
     )
+}
 
-    private fun usuarioToEntity(usuario: Usuario): UsuarioEntity = UsuarioEntity(
-        id = usuario.id,
-        nombre = usuario.nombre,
-        email = usuario.email,
-        idiomaMeta = usuario.idiomaMeta,
-        nivel = usuario.nivel,
-        progreso = usuario.progreso,
-        preferencias = usuario.preferencias,
-        estadisticas = usuario.estadisticas,
-        notificaciones = usuario.notificaciones
+fun UsuarioEntity.toDomain(): Usuario {
+    return Usuario(
+        id = this.id,
+        nombre = this.nombre,
+        email = this.email,
+        idiomaMeta = this.idiomaMeta,
+        nivel = this.nivel,
+        progreso = this.progreso,
+        preferencias = this.preferencias,
+        estadisticas = this.estadisticas,
+        notificaciones = this.notificaciones
     )
 }

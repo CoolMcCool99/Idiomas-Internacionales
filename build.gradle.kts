@@ -9,13 +9,6 @@ plugins {
     id("org.jetbrains.kotlin.kapt") version "1.9.22" apply false
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }

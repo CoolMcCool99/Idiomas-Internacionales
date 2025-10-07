@@ -2,24 +2,27 @@ package com.idiomasinternacionales.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.idiomasinternacionales.domain.model.GamificacionAvanzada
-import com.idiomasinternacionales.domain.usecase.GetGamificacionAvanzadaUseCase
+import com.idiomasinternacionales.model.Estadisticas
+import com.idiomasinternacionales.domain.usecase.GetUsuarioUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GamificacionViewModel @Inject constructor(
-    private val getGamificacionAvanzada: GetGamificacionAvanzadaUseCase
+    private val getUsuario: GetUsuarioUseCase
 ) : ViewModel() {
-    private val _gamificacion = MutableStateFlow<GamificacionAvanzada?>(null)
-    val gamificacion: StateFlow<GamificacionAvanzada?> = _gamificacion
+    private val _estadisticas = MutableStateFlow<Estadisticas?>(null)
+    val estadisticas: StateFlow<Estadisticas?> = _estadisticas
 
-    fun cargarGamificacion() {
+    fun cargarGamificacion(userId: String) {
         viewModelScope.launch {
-            _gamificacion.value = getGamificacionAvanzada()
+            getUsuario(userId).collect { usuario ->
+                _estadisticas.value = usuario?.estadisticas
+            }
         }
     }
 }

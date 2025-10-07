@@ -3,13 +3,22 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
-    id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
     namespace = "com.idiomasinternacionales"
     compileSdk = 34
+
+        signingConfigs {
+        create("release") {
+            storeFile = rootProject.file(project.property("RELEASE_STORE_FILE").toString())
+            storePassword = project.property("RELEASE_STORE_PASSWORD").toString()
+            keyAlias = project.property("RELEASE_KEY_ALIAS").toString()
+            keyPassword = project.property("RELEASE_KEY_PASSWORD").toString()
+        }
+    }
 
     defaultConfig {
         applicationId = "com.idiomasinternacionales"
@@ -31,6 +40,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     
@@ -48,12 +58,12 @@ android {
     }
     
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
     
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+                                    excludes += "/META-INF/{AL2.0,LGPL2.1,DEPENDENCIES,INDEX.LIST}"
         }
     }
 }
@@ -101,8 +111,12 @@ dependencies {
 
     // Networking (Retrofit, OkHttp, Moshi)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0") // <-- ¡Añadido!
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.moshi:moshi:1.15.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.0") // <-- AÑADIDO: Contiene KotlinJsonAdapterFactory
+    // kapt("com.squareup.moshi:moshi-kotlin-codegen:1.15.0") // <-- ELIMINADO: No se usa en este proyecto
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
 
     // Firebase (Analytics & Crashlytics)
     implementation("com.google.firebase:firebase-analytics:21.5.0")
