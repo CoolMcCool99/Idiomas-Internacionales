@@ -124,7 +124,7 @@ dependencies {
 
     // Google Cloud AI
     implementation("com.google.cloud:google-cloud-speech:4.30.0")
-    implementation("com.google.cloud:google-cloud-language:2.31.0")
+    implementation("com.google.cloud:google-cloud-language:2.77.0")
 
     // Testing
     testImplementation("junit:junit:4.13.2")
